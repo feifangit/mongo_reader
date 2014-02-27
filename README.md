@@ -1,4 +1,4 @@
-Monica
+Mongo Reader
 ======
 
 MongoDB HTTP interface.
