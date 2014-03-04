@@ -94,7 +94,6 @@ return query result
 `/_find?criteria:{"errorcode":1}&limit=2`
 <pre>
 {
-  "count": 504, 
   "ok": 1, 
   "results": [
     {
@@ -115,8 +114,7 @@ return query result
         "$date": 1386100597000
       }
     }
-  ], 
-  "size": 2
+  ]
 }
 </pre>
 >>

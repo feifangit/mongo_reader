@@ -32,5 +32,5 @@ class MongoHandler(object):
         if sort:
             pymongoSort = [(k, MongoHandler.SORT_TAG.get(v, ASCENDING)) for k, v in sort.items()]
             cursor.sort(pymongoSort)
-        return {"results": list(cursor), "size": cursor.count(True), "count": cursor.count()}
+        return {"results": list(cursor)}
 
