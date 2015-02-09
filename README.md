@@ -1,5 +1,6 @@
 Mongo Reader
 ======
+**A standalone flask application.**
 
 MongoDB HTTP interface.
 Inspired by [sleepy.mongoose](https://github.com/10gen-labs/sleepy.mongoose)
@@ -138,19 +139,25 @@ Available command line parameters:
  - `-p, --port` application listen port, `5000` by default
  - `-i, --ip` application listen ip, `0.0.0.0` by default
  - `-d` debug flag, will pass to `app.run(debug=?)`, `False` by default
- - `--mongoip` IP of mongod, `127.0.0.1` by default
- - `--mongoport` port of mongod, `27017` by default 
- - `--mongors` replica set name of MongoDB, `None` by default. if `--mongors` is provided, application will use `MongoReplicaSetClient` instead of `MongoClient`
+ - `--mongoconn` mongoDB connection string, `mongodb://127.0.0.1:27017/1` by default, MongoDB connection string format <http://docs.mongodb.org/manual/reference/connection-string/> 
 
-    python app.py -p 8080
+```python app.py -p 8080```
 
-will start application and listen on port 8080
+connect to a standalone MongoDB instance on `127.0.0.1:27017`
+will start web application and listen on port 8080
+
+```python app.py -p 8080 --mongoconn "mongodb://db1.example.net,db2.example.net:2500/?replicaSet=test&connectTimeoutMS=300000" ```
+
+connect to a MongoDB replicaset `test` on `db1.example.net:27017` and `db2.example.net:2500`
+the web application itself is listening on port 8080  
 
 ### Run with Gunicorn
-parameters `-p, --port, -i, --ip, -d` is **not** available for running with Gunicorn.
+If you're planning to run the app in production environment, you probably need to run it with Gunicorn which provides you a better performance.
+
+parameters `-p, --port, -i, --ip, -d` is omitted while running with Gunicorn.
 You can run
 
-    gunicorn -k gevent "app:build_app('--mongoport=27018 --mongoip=10.1.1.47')" -b 0.0.0.0:80
+```gunicorn -k gevent "app:build_app('--mongoport=27018 --mongoip=10.1.1.47')" -b 0.0.0.0:80```
 to start the application listen on 0.0.0.0:80, run with gevent and connect to a MongoDB instance on 10.1.1.47:27018
 
 
